@@ -5,9 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.SetDrivetrainSpeedCommand;
+import frc.robot.subsystems.DriveTrain;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,12 +17,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final XboxController joy0 = new XboxController(0);
-  private final XboxController joy1 = new XboxController(1);
+  public static DriveTrain driveTrain = new DriveTrain();
+  public final Joystick joy0 = new Joystick(0);
+  public final Joystick joy1 = new Joystick(1);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    driveTrain.setDefaultCommand(new SetDrivetrainSpeedCommand(() -> joy0.getRawAxis(0), () -> joy1.getRawAxis(1), driveTrain));
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -33,14 +38,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
-
-    new JoystickButton(joy1, XboxController.Button.kStart.value)
-    .and(new JoystickButton(joy1, XboxController.Button.kBack.value))
-    .and(new JoystickButton(joy0, XboxController.Button.kStart.value))
-    .and(new JoystickButton(joy0, XboxController.Button.kBack.value));
-
-
    
   }
 
