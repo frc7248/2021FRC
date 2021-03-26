@@ -25,7 +25,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    driveTrain.setDefaultCommand(new SetDrivetrainSpeedCommand(() -> joy0.getRawAxis(0), () -> joy1.getRawAxis(1), driveTrain));
+    driveTrain.setDefaultCommand(new SetDrivetrainSpeedCommand(() -> joy0.getRawAxis(), (1) -> joy1.getRawAxis(1), driveTrain));
 
     // Configure the button bindings
     configureButtonBindings();
