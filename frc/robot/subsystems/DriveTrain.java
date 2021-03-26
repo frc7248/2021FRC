@@ -7,16 +7,18 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
-  private final CANSparkMax leftMaster = new CANSparkMax(0, MotorType.kBrushless);
-  private final CANSparkMax rightSlave = new CANSparkMax(1, MotorType.kBrushless);
-  private final CANSparkMax leftSlave = new CANSparkMax(2, MotorType.kBrushless);
-  private final CANSparkMax rightMaster = new CANSparkMax(3, MotorType.kBrushless);
-  private final DifferentialDrive drivetrain = new DifferentialDrive(leftMaster, rightMaster);
-
+  CANSparkMax leftFront;
+  CANSparkMax rightFront;
+  CANSparkMax leftBack;
+  CANSparkMax rightBack;
+  SpeedControllerGroup leftMotors;
+  SpeedControllerGroup rightMotors;
+  DifferentialDrive drivetrain;
 
 
   // drive train speed, set to 0.x for X% speed
@@ -25,8 +27,19 @@ public class DriveTrain extends SubsystemBase {
 
   /** Creates a new DriveTrain. */
   public DriveTrain() {
-    leftSlave.follow(leftMaster);
-    rightSlave.follow(rightMaster);
+    leftFront = new CANSparkMax (8, MotorType.kBrushless);
+    leftFront.setInverted(false);
+    rightFront = new CANSparkMax (1, MotorType.kBrushless);
+    rightFront.setInverted(true);
+    leftBack = new CANSparkMax (2, MotorType.kBrushless);
+    leftBack.setInverted(false);
+    rightBack = new CANSparkMax (3, MotorType.kBrushless);
+    rightBack.setInverted(true);
+
+
+    leftMotors = new SpeedControllerGroup(leftFront, leftBack);
+    rightMotors = new SpeedControllerGroup(rightFront, rightBack);
+    drivetrain = new DifferentialDrive(leftMotors, rightMotors);
   }
 
   @Override
